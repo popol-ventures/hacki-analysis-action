@@ -24,17 +24,17 @@ jest.mock('@actions/github')
 // let setOutputMock: jest.SpiedFunction<typeof core.setOutput>
 
 describe('action', () => {
-  beforeEach(() => {
-    // TODO(@roeeyn): Implement this
-  })
+    beforeEach(() => {
+        // TODO(@roeeyn): Implement this
+    })
 
-  it('sets the analysis id output', async () => {
-    // TODO(@roeeyn): Implement this
-    expect(true).toBe(true)
-  })
+    it('sets the analysis id output', async () => {
+        // TODO(@roeeyn): Implement this
+        expect(true).toBe(true)
+    })
 
-  it('sets a failed status', async () => {
-    // TODO(@roeeyn): Implement this
-    expect(true).toBe(true)
-  })
+    it('sets a failed status', async () => {
+        // TODO(@roeeyn): Implement this
+        expect(true).toBe(true)
+    })
 })

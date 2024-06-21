@@ -1,29 +1,30 @@
 name: 'Hacki AI Analysis Action'
 description:
-  'Triggers an analysis in the Hacki AI environment. The results will be shown
-  in the PR.'
+    'Triggers an analysis in the Hacki AI environment. The results will be shown
+    in the PR.'
 author: 'Xolotl LLC'
 
 # Add your action's branding here. This will appear on the GitHub Marketplace.
 branding:
-  icon: 'server'
-  color: 'green'
+    icon: 'server'
+    color: 'green'
 
 # Define your inputs here.
 inputs:
-  HACKI_API_KEY:
-    description:
-      'The Hacki API key to identify the repo against the Hacki AI platform'
-    required: true
-  HACKI_HOST_URL:
-    description: 'The Hacki platform host URL'
-    default: 'https://api.hacki.ai'
+    HACKI_API_KEY:
+        description:
+            'The Hacki API key to identify the repo against the Hacki AI
+            platform'
+        required: true
+    HACKI_HOST_URL:
+        description: 'The Hacki platform host URL'
+        default: 'https://api.hacki.ai'
 
 # Define your outputs here.
 outputs:
-  analysis_id:
-    description: 'The analysis ID that will be used to track the progress.'
+    analysis_id:
+        description: 'The analysis ID that will be used to track the progress.'
 
 runs:
-  using: node20
-  main: dist/index.js
+    using: node20
+    main: dist/index.js

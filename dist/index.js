@@ -29294,7 +29294,7 @@ async function run() {
         const analysisId = await (0, hacki_1.triggerAnalysis)(analysisInput);
         core.debug(`analysisId: ${analysisId}`);
         // Set outputs for other workflow steps to use
-        core.setOutput('analysisId', analysisId);
+        core.setOutput('analysis_id', analysisId);
     }
     catch (error) {
         // Fail the workflow run if an error occurs
