@@ -29227,9 +29227,10 @@ async function triggerAnalysis(analysisInput) {
     // TODO(@roeeyn): Implement this
     core.debug(`api_key: ${analysisInput.apiKey.slice(-5)}`);
     core.debug(`api_url: ${analysisInput.apiUrl}`);
-    core.debug(`repo: ${analysisInput.repo}`);
-    core.debug(`owner: ${analysisInput.owner}`);
-    core.debug(`prId: ${analysisInput.prId}`);
+    core.debug(`repo: ${analysisInput.repo.name}`);
+    core.debug(`owner: ${analysisInput.repo.owner.name}`);
+    core.debug(`owner type: ${analysisInput.repo.owner.type}`);
+    core.debug(`prId: ${analysisInput.pullRequestId}`);
     return 'hardcoded analysis id';
 }
 exports.triggerAnalysis = triggerAnalysis;
@@ -29278,17 +29279,25 @@ async function run() {
     try {
         const apiKey = core.getInput('HACKI_API_KEY');
         const apiUrl = core.getInput('HACKI_HOST_URL');
-        const repo = github.context.repo.repo;
-        const owner = github.context.repo.owner;
-        const prId = github.context.payload.number;
+        const payload = github.context.payload;
+        const repository = payload.repository;
+        const repo = repository?.name ?? 'no_repo_name';
+        const repoOwner = repository?.owner.login ?? 'no_repo_owner';
+        const repoOwnerType = repository?.owner.type ?? 'no_repo_owner_type';
+        const pullRequestId = payload.number;
         // Debug logs are only output if the `ACTIONS_STEP_DEBUG` secret is true
         core.debug(`context: ${JSON.stringify(github.context, null, 2)}`);
         const analysisInput = {
             apiKey,
             apiUrl,
-            repo,
-            owner,
-            prId
+            repo: {
+                name: repo,
+                owner: {
+                    name: repoOwner,
+                    type: repoOwnerType
+                }
+            },
+            pullRequestId
         };
         core.debug(`analysisInput: ${JSON.stringify(analysisInput, null, 2)}`);
         const analysisId = await (0, hacki_1.triggerAnalysis)(analysisInput);
