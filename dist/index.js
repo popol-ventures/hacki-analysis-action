@@ -29231,6 +29231,7 @@ async function triggerAnalysis(analysisInput) {
     core.debug(`owner: ${analysisInput.repo.owner.name}`);
     core.debug(`owner type: ${analysisInput.repo.owner.type}`);
     core.debug(`prId: ${analysisInput.pullRequestId}`);
+    core.debug(`branch: ${analysisInput.branch}`);
     return 'hardcoded analysis id';
 }
 exports.triggerAnalysis = triggerAnalysis;
@@ -29284,6 +29285,7 @@ async function run() {
         const repo = repository?.name ?? 'no_repo_name';
         const repoOwner = repository?.owner.login ?? 'no_repo_owner';
         const repoOwnerType = repository?.owner.type ?? 'no_repo_owner_type';
+        const branch = payload.pull_request?.head.ref ?? 'no_branch';
         const pullRequestId = payload.number;
         // Debug logs are only output if the `ACTIONS_STEP_DEBUG` secret is true
         core.debug(`context: ${JSON.stringify(github.context, null, 2)}`);
@@ -29297,6 +29299,7 @@ async function run() {
                     type: repoOwnerType
                 }
             },
+            branch,
             pullRequestId
         };
         core.debug(`analysisInput: ${JSON.stringify(analysisInput, null, 2)}`);

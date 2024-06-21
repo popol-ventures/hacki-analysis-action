@@ -18,6 +18,8 @@ export async function run(): Promise<void> {
     const repo = repository?.name ?? 'no_repo_name'
     const repoOwner = repository?.owner.login ?? 'no_repo_owner'
     const repoOwnerType = repository?.owner.type ?? 'no_repo_owner_type'
+    const branch = payload.pull_request?.head.ref ?? 'no_branch'
+
     const pullRequestId = payload.number
 
     // Debug logs are only output if the `ACTIONS_STEP_DEBUG` secret is true
@@ -33,6 +35,7 @@ export async function run(): Promise<void> {
           type: repoOwnerType
         }
       },
+      branch,
       pullRequestId
     }
 

@@ -14,6 +14,7 @@ export type AnalysisInput = {
   apiKey: string
   apiUrl: string
   pullRequestId: number
+  branch: string
   repo: Repository
 }
 
@@ -27,5 +28,6 @@ export async function triggerAnalysis(
   core.debug(`owner: ${analysisInput.repo.owner.name}`)
   core.debug(`owner type: ${analysisInput.repo.owner.type}`)
   core.debug(`prId: ${analysisInput.pullRequestId}`)
+  core.debug(`branch: ${analysisInput.branch}`)
   return 'hardcoded analysis id'
 }
