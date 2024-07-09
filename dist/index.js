@@ -29249,7 +29249,8 @@ async function triggerAnalysis(analysisInput) {
             }
         })
     });
-    core.debug(`response: ${response}`);
+    core.debug(`response: ${JSON.stringify(response, null, 2)}`);
+    core.info(`trigger analysis response: ${JSON.stringify(response, null, 2)}`);
     const { analysis } = await response.json();
     return analysis;
 }
@@ -29329,8 +29330,15 @@ async function run() {
     }
     catch (error) {
         // Fail the workflow run if an error occurs
-        if (error instanceof Error)
+        if (error instanceof Error) {
             core.setFailed(`Failed to trigger Hacki analysis: ${error.message}`);
+            const errorMsg = `Failed to trigger Hacki analysis: ${error.message}`;
+            if (core.isDebug()) {
+                core.warning(errorMsg);
+                return;
+            }
+            core.setFailed(errorMsg);
+        }
     }
 }
 exports.run = run;

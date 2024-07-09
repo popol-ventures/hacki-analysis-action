@@ -65,7 +65,9 @@ export async function triggerAnalysis(
     }
   )
 
-  core.debug(`response: ${response}`)
+  core.debug(`response: ${JSON.stringify(response, null, 2)}`)
+
+  core.info(`trigger analysis response: ${JSON.stringify(response, null, 2)}`)
 
   const { analysis } = await response.json()
 

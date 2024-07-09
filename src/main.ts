@@ -47,7 +47,16 @@ export async function run(): Promise<void> {
     core.setOutput('analysis_id', analysisId)
   } catch (error) {
     // Fail the workflow run if an error occurs
-    if (error instanceof Error)
+    if (error instanceof Error) {
       core.setFailed(`Failed to trigger Hacki analysis: ${error.message}`)
+      const errorMsg = `Failed to trigger Hacki analysis: ${error.message}`
+
+      if (core.isDebug()) {
+        core.warning(errorMsg)
+        return
+      }
+
+      core.setFailed(errorMsg)
+    }
   }
 }
