@@ -2,7 +2,8 @@
 
 To trigger an analysis from your PR, add this workflow to your repository.
 
-To create an API key visit [Hacki AI](https://app.hacki.ai).
+> [!TIP]
+> To create an API key visit [Hacki AI](https://app.hacki.ai).
 
 ```yaml
 # File: .github/workflows/hackiai.yml
@@ -27,9 +28,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
-# Development
+## Development
 
-## Initial Setup
+### Initial Setup
 
 After you've cloned the repository to your local machine or codespace, you'll
 need to perform some initial setup steps before you can develop your action.
@@ -70,7 +71,7 @@ need to perform some initial setup steps before you can develop your action.
    ...
    ```
 
-## Update the Action Metadata
+### Update the Action Metadata
 
 The [`action.yml`](action.yml) file defines metadata about your action, such as
 input(s) and output(s). For details about this file, see
@@ -79,7 +80,7 @@ input(s) and output(s). For details about this file, see
 When you copy this repository, update `action.yml` with the name, description,
 inputs, and outputs for your action.
 
-## Update the Action Code
+### Update the Action Code
 
 The [`src/`](./src/) directory is the heart of your action! This contains the
 source code that will be run when your action is invoked. You can replace the
@@ -150,7 +151,7 @@ For information about versioning your action, see
 [Versioning](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md)
 in the GitHub Actions toolkit.
 
-## Validate the Action
+### Validate the Action
 
 You can now validate the action by referencing it in a workflow file. For
 example, [`ci.yml`](./.github/workflows/ci.yml) demonstrates how to reference an
