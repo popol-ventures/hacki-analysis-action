@@ -1,37 +1,37 @@
-# Create a GitHub Action Using TypeScript
+# Hacki AI - GitHub Action
 
-[![GitHub Super-Linter](https://github.com/actions/typescript-action/actions/workflows/linter.yml/badge.svg)](https://github.com/super-linter/super-linter)
-![CI](https://github.com/actions/typescript-action/actions/workflows/ci.yml/badge.svg)
-[![Check dist/](https://github.com/actions/typescript-action/actions/workflows/check-dist.yml/badge.svg)](https://github.com/actions/typescript-action/actions/workflows/check-dist.yml)
-[![CodeQL](https://github.com/actions/typescript-action/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/actions/typescript-action/actions/workflows/codeql-analysis.yml)
-[![Coverage](./badges/coverage.svg)](./badges/coverage.svg)
+To trigger an analysis from your PR, add this workflow to your repository.
 
-Use this template to bootstrap the creation of a TypeScript action. :rocket:
-
-This template includes compilation support, tests, a validation workflow,
-publishing, and versioning guidance.
-
-If you are new, there's also a simpler introduction in the
-[Hello world JavaScript action repository](https://github.com/actions/hello-world-javascript-action).
-
-## Create Your Own Action
-
-To create your own action, you can use this repository as a template! Just
-follow the below instructions:
-
-1. Click the **Use this template** button at the top of the repository
-1. Select **Create a new repository**
-1. Select an owner and name for your new repository
-1. Click **Create repository**
-1. Clone your new repository
-
-> [!IMPORTANT]
+> [!TIP]
 >
-> Make sure to remove or update the [`CODEOWNERS`](./CODEOWNERS) file! For
-> details on how to use this file, see
-> [About code owners](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners).
+> To create an API key visit [Hacki AI](https://app.hacki.ai).
 
-## Initial Setup
+```yaml
+# File: .github/workflows/hackiai.yml
+name: Hacki AI
+on:
+  pull_request:
+    branches:
+      - main # Verify this is your main branch
+
+jobs:
+  trigger-code-analysis:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Trigger HackiAI code analysis
+        uses: popol-ventures/hacki-analysis-action@v0.1.0
+        with:
+          HACKI_API_KEY: ${{ secrets.HACKI_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+```
+
+## Development
+
+### Initial Setup
 
 After you've cloned the repository to your local machine or codespace, you'll
 need to perform some initial setup steps before you can develop your action.
@@ -72,7 +72,7 @@ need to perform some initial setup steps before you can develop your action.
    ...
    ```
 
-## Update the Action Metadata
+### Update the Action Metadata
 
 The [`action.yml`](action.yml) file defines metadata about your action, such as
 input(s) and output(s). For details about this file, see
@@ -81,7 +81,7 @@ input(s) and output(s). For details about this file, see
 When you copy this repository, update `action.yml` with the name, description,
 inputs, and outputs for your action.
 
-## Update the Action Code
+### Update the Action Code
 
 The [`src/`](./src/) directory is the heart of your action! This contains the
 source code that will be run when your action is invoked. You can replace the
@@ -106,9 +106,8 @@ There are a few things to keep in mind when writing your action code:
   ```
 
   For more information about the GitHub Actions toolkit, see the
-  [documentation](https://github.com/actions/toolkit/blob/master/README.md).
-
-So, what are you waiting for? Go ahead and start customizing your action!
+  [documentation](https://github.com/actions/toolkit/blob/master/README.md). So,
+  what are you waiting for? Go ahead and start customizing your action!
 
 1. Create a new branch
 
@@ -124,12 +123,12 @@ So, what are you waiting for? Go ahead and start customizing your action!
    npm run all
    ```
 
-   > This step is important! It will run [`ncc`](https://github.com/vercel/ncc)
-   > to build the final JavaScript action code with all dependencies included.
-   > If you do not run this step, your action will not work correctly when it is
-   > used in a workflow. This step also includes the `--license` option for
-   > `ncc`, which will create a license file for all of the production node
-   > modules used in your project.
+   > [!IMPORTANT] This step is important! It will run
+   > [`ncc`](https://github.com/vercel/ncc) to build the final JavaScript action
+   > code with all dependencies included. If you do not run this step, your
+   > action will not work correctly when it is used in a workflow. This step
+   > also includes the `--license` option for `ncc`, which will create a license
+   > file for all of the production node modules used in your project.
 
 1. Commit your changes
 
@@ -153,7 +152,7 @@ For information about versioning your action, see
 [Versioning](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md)
 in the GitHub Actions toolkit.
 
-## Validate the Action
+### Validate the Action
 
 You can now validate the action by referencing it in a workflow file. For
 example, [`ci.yml`](./.github/workflows/ci.yml) demonstrates how to reference an
