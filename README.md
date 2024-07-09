@@ -2,8 +2,7 @@
 
 To trigger an analysis from your PR, add this workflow to your repository.
 
-> [!TIP]
-> To create an API key visit [Hacki AI](https://app.hacki.ai).
+> [!TIP] To create an API key visit [Hacki AI](https://app.hacki.ai).
 
 ```yaml
 # File: .github/workflows/hackiai.yml
