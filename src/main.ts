@@ -20,7 +20,7 @@ export async function run(): Promise<void> {
     const repoOwnerType = repository?.owner.type ?? 'no_repo_owner_type'
     const branch = payload.pull_request?.head.ref ?? 'no_branch'
 
-    const pullRequestId = payload.number
+    const pullRequestNumber = payload.number
 
     // Debug logs are only output if the `ACTIONS_STEP_DEBUG` secret is true
     core.debug(`context: ${JSON.stringify(github.context, null, 2)}`)
@@ -36,11 +36,11 @@ export async function run(): Promise<void> {
         }
       },
       branch,
-      pullRequestId
+      pullRequestNumber
     }
 
     core.debug(`analysisInput: ${JSON.stringify(analysisInput, null, 2)}`)
-    const analysisId = await triggerAnalysis(analysisInput)
+    const { id: analysisId } = await triggerAnalysis(analysisInput)
     core.debug(`analysisId: ${analysisId}`)
 
     // Set outputs for other workflow steps to use

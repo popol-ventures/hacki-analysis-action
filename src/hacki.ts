@@ -13,21 +13,56 @@ export type Repository = {
 export type AnalysisInput = {
   apiKey: string
   apiUrl: string
-  pullRequestId: number
+  pullRequestNumber: number
   branch: string
   repo: Repository
 }
 
+export type AnalysisResponse = {
+  id: string
+  status: string
+  type: string
+  updated_at: string
+  pull_request_number: number
+  completed_at: string | null
+  conclusion: string | null
+  scm_provider_run_id: string
+  head_sha: string
+  repo_id: string
+  created_at: string
+}
+
 export async function triggerAnalysis(
   analysisInput: AnalysisInput
-): Promise<string> {
+): Promise<AnalysisResponse> {
   // TODO(@roeeyn): Implement this
   core.debug(`api_key: ${analysisInput.apiKey.slice(-5)}`)
-  core.debug(`api_url: ${analysisInput.apiUrl}`)
-  core.debug(`repo: ${analysisInput.repo.name}`)
+  core.debug(`branch: ${analysisInput.branch}`)
+  core.debug(`prId: ${analysisInput.pullRequestNumber}`)
+  //github
+  core.debug(`repo name: ${analysisInput.repo.name}`)
   core.debug(`owner: ${analysisInput.repo.owner.name}`)
   core.debug(`owner type: ${analysisInput.repo.owner.type}`)
-  core.debug(`prId: ${analysisInput.pullRequestId}`)
-  core.debug(`branch: ${analysisInput.branch}`)
-  return 'hardcoded analysis id'
+  core.debug(`api_url: ${analysisInput.apiUrl}`)
+
+  const response = await fetch(`${analysisInput.apiUrl}/api/v1/analysis`, {
+    method: 'POST',
+    body: JSON.stringify({
+      api_key: analysisInput.apiKey,
+      branch: analysisInput.branch,
+      pull_request_number: analysisInput.pullRequestNumber,
+      scm_provider: 'github',
+      repo: {
+        name: analysisInput.repo.name,
+        owner: {
+          name: analysisInput.repo.owner.name,
+          type: analysisInput.repo.owner.type
+        }
+      }
+    })
+  })
+
+  const { analysis } = await response.json()
+
+  return analysis as AnalysisResponse
 }

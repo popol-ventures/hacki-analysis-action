@@ -29226,13 +29226,31 @@ const core = __importStar(__nccwpck_require__(2186));
 async function triggerAnalysis(analysisInput) {
     // TODO(@roeeyn): Implement this
     core.debug(`api_key: ${analysisInput.apiKey.slice(-5)}`);
-    core.debug(`api_url: ${analysisInput.apiUrl}`);
-    core.debug(`repo: ${analysisInput.repo.name}`);
+    core.debug(`branch: ${analysisInput.branch}`);
+    core.debug(`prId: ${analysisInput.pullRequestNumber}`);
+    //github
+    core.debug(`repo name: ${analysisInput.repo.name}`);
     core.debug(`owner: ${analysisInput.repo.owner.name}`);
     core.debug(`owner type: ${analysisInput.repo.owner.type}`);
-    core.debug(`prId: ${analysisInput.pullRequestId}`);
-    core.debug(`branch: ${analysisInput.branch}`);
-    return 'hardcoded analysis id';
+    core.debug(`api_url: ${analysisInput.apiUrl}`);
+    const response = await fetch(`${analysisInput.apiUrl}/api/v1/analysis`, {
+        method: 'POST',
+        body: JSON.stringify({
+            api_key: analysisInput.apiKey,
+            branch: analysisInput.branch,
+            pull_request_number: analysisInput.pullRequestNumber,
+            scm_provider: 'github',
+            repo: {
+                name: analysisInput.repo.name,
+                owner: {
+                    name: analysisInput.repo.owner.name,
+                    type: analysisInput.repo.owner.type
+                }
+            }
+        })
+    });
+    const { analysis } = await response.json();
+    return analysis;
 }
 exports.triggerAnalysis = triggerAnalysis;
 
@@ -29286,7 +29304,7 @@ async function run() {
         const repoOwner = repository?.owner.login ?? 'no_repo_owner';
         const repoOwnerType = repository?.owner.type ?? 'no_repo_owner_type';
         const branch = payload.pull_request?.head.ref ?? 'no_branch';
-        const pullRequestId = payload.number;
+        const pullRequestNumber = payload.number;
         // Debug logs are only output if the `ACTIONS_STEP_DEBUG` secret is true
         core.debug(`context: ${JSON.stringify(github.context, null, 2)}`);
         const analysisInput = {
@@ -29300,10 +29318,10 @@ async function run() {
                 }
             },
             branch,
-            pullRequestId
+            pullRequestNumber
         };
         core.debug(`analysisInput: ${JSON.stringify(analysisInput, null, 2)}`);
-        const analysisId = await (0, hacki_1.triggerAnalysis)(analysisInput);
+        const { id: analysisId } = await (0, hacki_1.triggerAnalysis)(analysisInput);
         core.debug(`analysisId: ${analysisId}`);
         // Set outputs for other workflow steps to use
         core.setOutput('analysis_id', analysisId);

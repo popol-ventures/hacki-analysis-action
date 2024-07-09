@@ -58,7 +58,7 @@ jobs:
         uses: ./
         with:
           HACKI_API_KEY: 'this_is_a_test_api_key'
-          HACKI_HOST_URL: 'this_is_my_custom_host'
+          HACKI_HOST_URL: 'https://app.hacki.ai'
 
       - name: Print Output
         id: output

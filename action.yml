@@ -17,7 +17,7 @@ inputs:
     required: true
   HACKI_HOST_URL:
     description: 'The Hacki platform host URL'
-    default: 'https://api.hacki.ai'
+    default: 'https://app.hacki.ai'
 
 # Define your outputs here.
 outputs:
