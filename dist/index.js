@@ -29249,9 +29249,8 @@ async function triggerAnalysis(analysisInput) {
             }
         })
     });
-    core.debug(`response: ${JSON.stringify(response, null, 2)}`);
-    core.info(`trigger analysis response: ${JSON.stringify(response, null, 2)}`);
     const { analysis } = await response.json();
+    core.info(`trigger analysis response: ${JSON.stringify(analysis, null, 2)}`);
     return analysis;
 }
 exports.triggerAnalysis = triggerAnalysis;
@@ -29331,7 +29330,6 @@ async function run() {
     catch (error) {
         // Fail the workflow run if an error occurs
         if (error instanceof Error) {
-            core.setFailed(`Failed to trigger Hacki analysis: ${error.message}`);
             const errorMsg = `Failed to trigger Hacki analysis: ${error.message}`;
             if (core.isDebug()) {
                 core.warning(errorMsg);
