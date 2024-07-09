@@ -29249,6 +29249,7 @@ async function triggerAnalysis(analysisInput) {
             }
         })
     });
+    core.debug(`response: ${response}`);
     const { analysis } = await response.json();
     return analysis;
 }
@@ -29329,7 +29330,7 @@ async function run() {
     catch (error) {
         // Fail the workflow run if an error occurs
         if (error instanceof Error)
-            core.setFailed(error.message);
+            core.setFailed(`Failed to trigger Hacki analysis: ${error.message}`);
     }
 }
 exports.run = run;
