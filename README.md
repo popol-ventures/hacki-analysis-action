@@ -1,4 +1,4 @@
-# Usage
+# Hacki AI - GitHub Action
 
 To trigger an analysis from your PR, add this workflow to your repository.
 
