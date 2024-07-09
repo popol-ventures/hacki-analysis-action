@@ -29233,7 +29233,7 @@ async function triggerAnalysis(analysisInput) {
     core.debug(`owner: ${analysisInput.repo.owner.name}`);
     core.debug(`owner type: ${analysisInput.repo.owner.type}`);
     core.debug(`api_url: ${analysisInput.apiUrl}`);
-    const response = await fetch(`${analysisInput.apiUrl}/api/v1/analysis`, {
+    const response = await fetch(`${analysisInput.apiUrl}/api/v1/analyzer/analysis`, {
         method: 'POST',
         body: JSON.stringify({
             api_key: analysisInput.apiKey,
