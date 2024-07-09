@@ -29224,7 +29224,6 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.triggerAnalysis = void 0;
 const core = __importStar(__nccwpck_require__(2186));
 async function triggerAnalysis(analysisInput) {
-    // TODO(@roeeyn): Implement this
     core.debug(`api_key: ${analysisInput.apiKey.slice(-5)}`);
     core.debug(`branch: ${analysisInput.branch}`);
     core.debug(`prId: ${analysisInput.pullRequestNumber}`);
@@ -29235,6 +29234,10 @@ async function triggerAnalysis(analysisInput) {
     core.debug(`api_url: ${analysisInput.apiUrl}`);
     const response = await fetch(`${analysisInput.apiUrl}/api/v1/analyzer/analysis`, {
         method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json'
+        },
         body: JSON.stringify({
             api_key: analysisInput.apiKey,
             branch: analysisInput.branch,
@@ -29249,8 +29252,9 @@ async function triggerAnalysis(analysisInput) {
             }
         })
     });
-    const { analysis } = await response.json();
-    core.info(`trigger analysis response: ${JSON.stringify(analysis, null, 2)}`);
+    const analysisResponse = await response.json();
+    core.info(`trigger analysis response: ${JSON.stringify(analysisResponse, null, 2)}`);
+    const { analysis } = analysisResponse;
     return analysis;
 }
 exports.triggerAnalysis = triggerAnalysis;

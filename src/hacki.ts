@@ -35,7 +35,6 @@ export type AnalysisResponse = {
 export async function triggerAnalysis(
   analysisInput: AnalysisInput
 ): Promise<AnalysisResponse> {
-  // TODO(@roeeyn): Implement this
   core.debug(`api_key: ${analysisInput.apiKey.slice(-5)}`)
   core.debug(`branch: ${analysisInput.branch}`)
   core.debug(`prId: ${analysisInput.pullRequestNumber}`)
@@ -49,6 +48,10 @@ export async function triggerAnalysis(
     `${analysisInput.apiUrl}/api/v1/analyzer/analysis`,
     {
       method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
+      },
       body: JSON.stringify({
         api_key: analysisInput.apiKey,
         branch: analysisInput.branch,
@@ -65,9 +68,13 @@ export async function triggerAnalysis(
     }
   )
 
-  const { analysis } = await response.json()
+  const analysisResponse = await response.json()
 
-  core.info(`trigger analysis response: ${JSON.stringify(analysis, null, 2)}`)
+  core.info(
+    `trigger analysis response: ${JSON.stringify(analysisResponse, null, 2)}`
+  )
+
+  const { analysis } = analysisResponse
 
   return analysis as AnalysisResponse
 }
