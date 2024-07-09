@@ -70,8 +70,6 @@ need to perform some initial setup steps before you can develop your action.
    ...
    ```
 
-
-
 ## Update the Action Metadata
 
 The [`action.yml`](action.yml) file defines metadata about your action, such as
@@ -106,8 +104,8 @@ There are a few things to keep in mind when writing your action code:
   ```
 
   For more information about the GitHub Actions toolkit, see the
-  [documentation](https://github.com/actions/toolkit/blob/master/README.md).
-  So, what are you waiting for? Go ahead and start customizing your action!
+  [documentation](https://github.com/actions/toolkit/blob/master/README.md). So,
+  what are you waiting for? Go ahead and start customizing your action!
 
 1. Create a new branch
 
@@ -226,4 +224,3 @@ following steps:
 1. **Pushing the new tag to the remote:** Finally, the script pushes the new tag
    to the remote repository. From here, you will need to create a new release in
    GitHub and users can easily reference the new tag in their workflows.
-
