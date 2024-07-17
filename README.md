@@ -26,7 +26,6 @@ jobs:
         uses: popol-ventures/hacki-analysis-action@v0.1.0
         with:
           HACKI_API_KEY: ${{ secrets.HACKI_API_KEY }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
 ## Development
